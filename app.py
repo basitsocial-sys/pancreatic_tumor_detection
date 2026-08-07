@@ -193,7 +193,10 @@ def run_inference(_model, _device, nii_bytes: bytes, bbox_json: str = None):
         if bbox:
             source = 'TotalSegmentator (auto-detected)'
 
-    os.unlink(tmp_path)  # clean up temp file
+    try:
+        os.unlink(tmp_path)  # clean up temp file
+    except Exception:
+        pass
 
     # ── Stage 2: Crop + run model on pancreas region ─────────────────────────
     if bbox:
@@ -639,7 +642,7 @@ if ct_raw is not None and pred_np is not None:
             with st.spinner("Generating 2D views..."):
                 fig2d = make_2d_figure(ct_norm, pred_vis, plane=plane_2d,
                                        alpha_overlay=alpha_val, show_xai=show_xai)
-            st.pyplot(fig2d, width="stretch"); plt.close(fig2d)
+            st.pyplot(fig2d, use_container_width=True); plt.close(fig2d)
         ti += 1
 
     if view_mode in ("3D Volume","Both"):
@@ -647,7 +650,7 @@ if ct_raw is not None and pred_np is not None:
             st.markdown("*Drag to rotate · Scroll to zoom · Double-click to reset*")
             with st.spinner("Building 3D isosurface (may take 30s)..."):
                 fig3d = make_3d_figure(pred_vis)
-            st.plotly_chart(fig3d, width="stretch")
+            st.plotly_chart(fig3d, use_container_width=True)
         ti += 1
 
     with tabs[ti]:
@@ -665,7 +668,7 @@ if ct_raw is not None and pred_np is not None:
         ax_d.set_title('Predicted Class Distribution', color='white', fontweight='bold')
         ax_d.tick_params(colors='#8b949e')
         [sp.set_edgecolor('#21262d') for sp in ax_d.spines.values()]
-        st.pyplot(fig_d); plt.close(fig_d)
+        st.pyplot(fig_d, use_container_width=True); plt.close(fig_d)
     ti += 1
 
     if show_xai:
@@ -675,7 +678,7 @@ if ct_raw is not None and pred_np is not None:
             with st.spinner("Computing XAI..."):
                 fig_xai = make_2d_figure(ct_norm, pred_vis, plane=plane_2d,
                                           alpha_overlay=alpha_val, show_xai=True)
-            st.pyplot(fig_xai, width="stretch"); plt.close(fig_xai)
+            st.pyplot(fig_xai, use_container_width=True); plt.close(fig_xai)
 
 elif not ckpt_exists:
     st.markdown("""
