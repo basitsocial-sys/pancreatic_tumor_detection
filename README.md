@@ -286,7 +286,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 👤 Author
 
-**Developed with ❤️ by Basit Ali**
+**Developed with  by Basit Ali**
 
 - GitHub: [@basitsocial-sys](https://github.com/basitsocial-sys)
 - Project: [Pancreatic Tumor Detection System](https://github.com/basitsocial-sys/pancreatic_tumor_detection)
